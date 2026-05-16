@@ -1,21 +1,42 @@
-const display = document.getElementById("display");
-
-function appendValue(value) {
-  display.value += value;
+body {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(to right, #4facfe, #00f2fe);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
 }
 
-function clearDisplay() {
-  display.value = "";
+.container {
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  text-align: center;
+  width: 300px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);
 }
 
-function deleteLast() {
-  display.value = display.value.slice(0, -1);
+input {
+  width: 80%;
+  padding: 10px;
+  margin-bottom: 10px;
 }
 
-function calculate() {
-  try {
-    display.value = eval(display.value);
-  } catch {
-    display.value = "Error";
-  }
+button {
+  padding: 10px 20px;
+  border: none;
+  background: #3498db;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #2980b9;
+}
+
+#weatherResult {
+  margin-top: 20px;
+  font-size: 18px;
 }
