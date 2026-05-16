@@ -1,34 +1,28 @@
-async function getWeather() {
+function calculateBMI() {
 
-  const city = document.getElementById("city").value;
+  const weight = document.getElementById("weight").value;
+  const height = document.getElementById("height").value / 100;
 
-  const apiKey = "YOUR_API_KEY";
-
-  const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
-
-  try {
-
-    const response = await fetch(url);
-
-    const data = await response.json();
-
-    if (data.cod === "404") {
-      document.getElementById("weatherResult").innerHTML =
-        "City not found";
-      return;
-    }
-
-    document.getElementById("weatherResult").innerHTML = `
-      <h2>${data.name}</h2>
-      <p>Temperature: ${data.main.temp} °C</p>
-      <p>Weather: ${data.weather[0].description}</p>
-      <p>Humidity: ${data.main.humidity}%</p>
-    `;
-
-  } catch (error) {
-
-    document.getElementById("weatherResult").innerHTML =
-      "Error fetching weather data";
-
+  if (weight === "" || height === "") {
+    document.getElementById("result").innerHTML =
+      "Please enter valid values";
+    return;
   }
+
+  const bmi = (weight / (height * height)).toFixed(2);
+
+  let status = "";
+
+  if (bmi < 18.5) {
+    status = "Underweight";
+  } else if (bmi >= 18.5 && bmi < 24.9) {
+    status = "Normal weight";
+  } else if (bmi >= 25 && bmi < 29.9) {
+    status = "Overweight";
+  } else {
+    status = "Obese";
+  }
+
+  document.getElementById("result").innerHTML =
+    `Your BMI is ${bmi} (${status})`;
 }
