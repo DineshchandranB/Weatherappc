@@ -1,42 +1,34 @@
-body {
-  font-family: Arial, sans-serif;
-  background: linear-gradient(to right, #4facfe, #00f2fe);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  margin: 0;
-}
+async function getWeather() {
 
-.container {
-  background: white;
-  padding: 30px;
-  border-radius: 10px;
-  text-align: center;
-  width: 300px;
-  box-shadow: 0 0 15px rgba(0,0,0,0.2);
-}
+  const city = document.getElementById("city").value;
 
-input {
-  width: 80%;
-  padding: 10px;
-  margin-bottom: 10px;
-}
+  const apiKey = "YOUR_API_KEY";
 
-button {
-  padding: 10px 20px;
-  border: none;
-  background: #3498db;
-  color: white;
-  border-radius: 5px;
-  cursor: pointer;
-}
+  const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
 
-button:hover {
-  background: #2980b9;
-}
+  try {
 
-#weatherResult {
-  margin-top: 20px;
-  font-size: 18px;
+    const response = await fetch(url);
+
+    const data = await response.json();
+
+    if (data.cod === "404") {
+      document.getElementById("weatherResult").innerHTML =
+        "City not found";
+      return;
+    }
+
+    document.getElementById("weatherResult").innerHTML = `
+      <h2>${data.name}</h2>
+      <p>Temperature: ${data.main.temp} °C</p>
+      <p>Weather: ${data.weather[0].description}</p>
+      <p>Humidity: ${data.main.humidity}%</p>
+    `;
+
+  } catch (error) {
+
+    document.getElementById("weatherResult").innerHTML =
+      "Error fetching weather data";
+
+  }
 }
